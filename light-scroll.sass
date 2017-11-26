@@ -1,0 +1,50 @@
+=scroll-initial
+  .scroll-bar, .scroll
+    border-radius: 3px
+    transition: .2s ease-out
+  .scroll-bar
+    height: 94%
+    top: 3%
+    width: 6px
+    right: 3px
+    background: rgba(169, 169, 169, 0)
+    transition-property: background
+    .scroll
+      transition-property: opacity, height
+      background: linear-gradient(0deg, #dfec59, #9c27b0)
+      opacity: 0
+      
+=scroll-cont-hover
+  & > .scroll-bar
+    background: rgba(129, 129, 129, 0.65)
+    .scroll
+      opacity: 0.8
+      
+=scroll-hover
+  .scroll-bar
+    background: rgba(129, 129, 129, 1)
+    .scroll
+      opacity: 1
+
+
+[data-scroll]
+  position: relative
+  overflow-y: scroll
+  &.scroll-dissabled .scroll-bar
+    display: none
+  &:hover
+    +scroll-cont-hover
+  .scroll-bar, .scroll
+    width: 100%
+    box-sizing: border-box
+  .scroll-bar
+    overflow: hidden
+    user-select: none
+    position: absolute
+    &:hover
+      +scroll-hover
+    .scroll
+      position: relative
+      &:hover
+        cursor: pointer
+  +scroll-initial
