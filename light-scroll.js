@@ -1,15 +1,16 @@
-function init(options) {
+window.initLightScroll = options => {
   if (isTouch()) {return false}
-  var sсrollContainers = document.querySelectorAll('[data-scroll]'),
+  var sсrollContainers = document.querySelectorAll('[lightscroll]'),
       scrollData = [],
       keyScrollData = {},
       isMS = window.navigator.userAgent.includes('Edge'),
-      { scroll_speed } = options;
+      scroll_speed = 15;
+  
+  options && options.speed && (scroll_speed = options.speed)
 
   for (let i = 0; i < sсrollContainers.length; i++) {
-    let { scrollHeight, clientHeight } = sсrollContainers[i],
-        scroll= injectScroll(sсrollContainers[i], i),
-        container = sсrollContainers[i],
+    let container = sсrollContainers[i],
+        scroll = injectScroll(container, i),
         top = 0,
         { maxHeight, height, _kw_deltaTop } = recalculateScroll(scroll, container);
 
@@ -34,7 +35,7 @@ function init(options) {
   }
   
   function scrollUpdate(scrollContainer) {
-    var data = scrollData[scrollContainer.dataset.scroll];
+    var data = scrollData[scrollContainer.getAttribute('lightscroll')];
     data.scroll.parentNode.style['margin-top'] = '0px';
     
     var { maxHeight, height, _kw_scrollTop } = recalculateScroll(data.scroll, scrollContainer)
@@ -57,9 +58,9 @@ function init(options) {
     var scroll = document.createElement('div');
     
     scroll.classList.add('scroll-bar')
-    scroll.innerHTML += ('<div class="scroll" data-scroll-id="' + index + '"></div>')
+    scroll.innerHTML += ('<div class="scroll" lightscroll-id="' + index + '"></div>')
     elem.appendChild(scroll)
-    elem.setAttribute('data-scroll', index)
+    elem.setAttribute('lightscroll', index)
     
     return scroll.firstChild
   }
@@ -155,4 +156,3 @@ function init(options) {
   return scrollUpdate
 }
 
-module.exports = init

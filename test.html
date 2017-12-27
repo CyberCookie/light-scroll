@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>test light scroll</title>
+    <link rel="stylesheet" type="text/css" href="./light-scroll.min.css">
+    <script type="text/javascript" src="light-scroll.js"></script>
+    <style>
+      body {
+        margin: 0;
+      }
+      .main-scroll {
+        height: 100vh;
+      }
+      .scrollable-block-test {
+        width: 205px;
+        height: 205px;
+        padding: 10px;
+        margin-bottom: 20px;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        border: 1px dotted black;
+      }
+      .scrollable-block-test .to-hight-children {
+        background: lightgray;
+        height: 283px;
+        width: 100%;
+      }
+      #increase-block-height, #decrease-block-height {
+        position: fixed;
+        left: 210px;
+      }
+      #decrease-block-height {
+        top: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-scroll" lightscroll>
+      <div class="scrollable-block-test dynamic-height" lightscroll>
+        <div class="to-hight-children">
+          <button id="increase-block-height">increase height</button>
+          <button id="decrease-block-height">decrease height</button>
+        </div>
+      </div>
+      <div class="scrollable-block-test" lightscroll>
+        <div class="to-hight-children"> </div>
+      </div>
+      <div style="height: 2000px;"></div>
+    </div>
+    
+    <script>
+      var recalculate = window.initLightScroll(),
+
+        dynamicHeightContainer = document.getElementsByClassName('dynamic-height')[0],
+        dynamicHeightBlock = dynamicHeightContainer.firstElementChild;
+
+      function changeTestBlockHeight(value) {
+        var height = window.getComputedStyle(dynamicHeightBlock)['height']
+        dynamicHeightBlock.style['height'] = parseInt(height || 0) + value + 'px'
+
+        recalculate(dynamicHeightContainer)
+      }
+
+      document.getElementById('increase-block-height').addEventListener('click', e => {
+        changeTestBlockHeight(20)
+      })
+      document.getElementById('decrease-block-height').addEventListener('click', e => {
+        changeTestBlockHeight(-20)
+      })
+    </script>
+  </body>
+</html>
